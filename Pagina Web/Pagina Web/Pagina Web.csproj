@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\InicioController.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -152,6 +153,7 @@
     <Content Include="Estilos\img\undraw_profile_2.svg" />
     <Content Include="Estilos\img\undraw_profile_3.svg" />
     <Content Include="Estilos\img\undraw_rocket.svg" />
+    <Content Include="Estilos\js\RegistroUsuarios.js" />
     <Content Include="Estilos\js\sb-admin-2.js" />
     <Content Include="Estilos\js\sb-admin-2.min.js" />
     <Content Include="Estilos\vendor\bootstrap\js\bootstrap.bundle.js" />
@@ -296,6 +298,7 @@
     <Content Include="Views\Inicio\RegistrarUsuario.cshtml" />
     <Content Include="Views\Shared\_LayoutExterno.cshtml" />
     <Content Include="Views\Inicio\PantallaPrincipal.cshtml" />
+    <Content Include="Views\Inicio\RecuperarAcceso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
