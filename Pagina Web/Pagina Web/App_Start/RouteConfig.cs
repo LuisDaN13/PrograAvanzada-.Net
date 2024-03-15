@@ -16,7 +16,7 @@ namespace Pagina_Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Inicio", action = "IniciarSesion", id = UrlParameter.Optional }
+                defaults: new { controller = "Inicio", action = "IniciarSesionUsuario", id = UrlParameter.Optional }
             );
         }
     }

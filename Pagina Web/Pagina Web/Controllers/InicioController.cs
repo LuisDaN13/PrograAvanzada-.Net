@@ -11,19 +11,25 @@ namespace Pagina_Web.Controllers
     public class InicioController : Controller
     {
 
+        UsuarioModel modelo = new UsuarioModel();
+
         // -------------------------------------------------------------
         // PARA INICIAR SESION
 
         [HttpGet]
-        public ActionResult IniciarSesion()
+        public ActionResult IniciarSesionUsuario()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult IniciarSesion(Usuario entidad)
+        public ActionResult IniciarSesionUsuario(Usuario entidad)
         {
-            return RedirectToAction("PantallaPrincipal", "Inicio");
+            var respuesta = modelo.IniciarSesionUsuario(entidad);
+
+            if(respuesta.Count > 0)
+                return RedirectToAction("PantallaPrincipal", "Inicio");
+            return View();
         }
 
         // -------------------------------------------------------------
@@ -38,6 +44,11 @@ namespace Pagina_Web.Controllers
         [HttpPost]
         public ActionResult RegistrarUsuario(Usuario entidad)
         {
+            var respuesta = modelo.RegistrarUsuario(entidad);
+
+            if(respuesta > 0)
+                return RedirectToAction("IniciarSesion", "Inicio");
+
             return View();
         }
 

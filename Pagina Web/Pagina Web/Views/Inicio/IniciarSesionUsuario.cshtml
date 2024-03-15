@@ -1,7 +1,7 @@
 ﻿@model Pagina_Web.Entidades.Usuario 
 
 @{
-    ViewBag.Title = "IniciarSesion";
+    ViewBag.Title = "IniciarSesionUsuario";
     Layout = "~/Views/Shared/_LayoutExterno.cshtml";
 }
 
@@ -17,7 +17,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4"> Iniciar Sesión </h1>
                                 </div>
-                                @using (Html.BeginForm("IniciarSesion", "Inicio"))
+                                @using (Html.BeginForm("IniciarSesionUsuario", "Inicio"))
                                 {
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Identificacion, new {@class= "form-control form-control-user", @placeholder= "Identificacion" })
