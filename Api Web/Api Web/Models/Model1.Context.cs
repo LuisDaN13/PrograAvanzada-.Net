@@ -74,5 +74,14 @@ namespace Api_Web.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RecuperarAccesoUsuario_Result>("RecuperarAccesoUsuario", identificacionParameter, correoElectronicoParameter);
         }
+    
+        public virtual ObjectResult<ConsultarProductos_Result> ConsultarProductos(Nullable<bool> mostrarTodos)
+        {
+            var mostrarTodosParameter = mostrarTodos.HasValue ?
+                new ObjectParameter("MostrarTodos", mostrarTodos) :
+                new ObjectParameter("MostrarTodos", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ConsultarProductos_Result>("ConsultarProductos", mostrarTodosParameter);
+        }
     }
 }

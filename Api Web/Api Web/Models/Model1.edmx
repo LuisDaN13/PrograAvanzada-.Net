@@ -5,6 +5,9 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="ConsultarProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MostrarTodos" Type="bit" Mode="In" />
+        </Function>
         <Function Name="IniciarSesionUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Identificacion" Type="varchar" Mode="In" />
           <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
@@ -39,6 +42,9 @@
             <Parameter Name="Identificacion" Mode="In" Type="String" />
             <Parameter Name="CorreoElectronico" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="ConsultarProductos" ReturnType="Collection(Model.ConsultarProductos_Result)">
+            <Parameter Name="MostrarTodos" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="IniciarSesionUsuario_Result">
           <Property Type="Int64" Name="Consecutivo" Nullable="false" />
@@ -57,6 +63,16 @@
           <Property Type="Boolean" Name="Estado" Nullable="false" />
           <Property Type="Boolean" Name="Temporal" Nullable="true" />
           <Property Type="DateTime" Name="Vencimiento" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="ConsultarProductos_Result">
+          <Property Type="Int64" Name="Consecutivo" Nullable="false" />
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="200" />
+          <Property Type="Decimal" Name="Precio" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="Inventario" Nullable="false" />
+          <Property Type="Boolean" Name="Estado" Nullable="false" />
+          <Property Type="String" Name="RutaImagen" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="IdCategoria" Nullable="false" />
+          <Property Type="String" Name="NombreCategoria" Nullable="false" MaxLength="200" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -88,6 +104,20 @@
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Temporal" ColumnName="Temporal" />
                 <ScalarProperty Name="Vencimiento" ColumnName="Vencimiento" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ConsultarProductos" FunctionName="Model.Store.ConsultarProductos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.ConsultarProductos_Result">
+                <ScalarProperty Name="Consecutivo" ColumnName="Consecutivo" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Inventario" ColumnName="Inventario" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="RutaImagen" ColumnName="RutaImagen" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
