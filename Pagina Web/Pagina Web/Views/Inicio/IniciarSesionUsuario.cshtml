@@ -17,10 +17,18 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4"> Iniciar Sesión </h1>
                                 </div>
+
+                                @if (ViewBag.MsjPantalla != null)
+                                {
+                                    <div class="alert alert-warning" role="alert">
+                                        @ViewBag.MsjPantalla
+                                    </div>
+                                }
+
                                 @using (Html.BeginForm("IniciarSesionUsuario", "Inicio"))
                                 {
                                     <div class="form-group">
-                                        @Html.TextBoxFor(m => m.Identificacion, new {@class= "form-control form-control-user", @placeholder= "Identificacion" })
+                                        @Html.TextBoxFor(m => m.Identificacion, new { @class = "form-control form-control-user", @placeholder = "Identificacion" })
                                     </div>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Contrasenna, new { @class = "form-control form-control-user", @placeholder = "Contraseña" })
@@ -30,7 +38,7 @@
                                 }
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="@Url.Action("RecuperarAcceso", "Inicio")"> Recuperar Acceso </a>
+                                    <a class="small" href="@Url.Action("RecuperarAccesoUsuario", "Inicio")"> Recuperar Acceso </a>
                                 </div>
                                 <div class="text-center">
                                     <a class="small" href="@Url.Action("RegistrarUsuario", "Inicio")"> Registrar Usuario </a>

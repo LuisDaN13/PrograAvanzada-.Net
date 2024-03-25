@@ -13,4 +13,12 @@ namespace Pagina_Web.Entidades
         public string Correo { get; set; }
 
     }
+
+    public class ConfirmacionUsuario
+    {
+        public int Codigo { get; set; }
+        public string Detalle { get; set; }
+        public List<Usuario> Datos { get; set; }
+        public Usuario Dato { get; set; }
+    }
 }

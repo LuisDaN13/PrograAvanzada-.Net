@@ -1,7 +1,7 @@
 ﻿@model Pagina_Web.Entidades.Usuario
 
 @{
-    ViewBag.Title = "Recuperar Acceso";
+    ViewBag.Title = "Recuperar Acceso Usuario";
     Layout = "~/Views/Shared/_LayoutExterno.cshtml";
 }
 
@@ -17,7 +17,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4"> Recuperación de Acceso </h1>
                                 </div>
-                                @using (@Html.BeginForm("RecuperarAcceso", "Inicio"))
+                                @using (@Html.BeginForm("RecuperarAccesoUsuario", "Inicio"))
                                 {
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Correo, new { @class = "form-control form-control-user", @placeholder = "Correo Electrónico" })

@@ -27,9 +27,13 @@ namespace Pagina_Web.Controllers
         {
             var respuesta = modelo.IniciarSesionUsuario(entidad);
 
-            if(respuesta.Count > 0)
+            if (respuesta.Codigo == 0)
                 return RedirectToAction("PantallaPrincipal", "Inicio");
-            return View();
+            else
+            {
+                ViewBag.MsjPantalla = respuesta.Detalle;
+                return View();
+            }
         }
 
         // -------------------------------------------------------------
@@ -46,26 +50,29 @@ namespace Pagina_Web.Controllers
         {
             var respuesta = modelo.RegistrarUsuario(entidad);
 
-            if(respuesta > 0)
-                return RedirectToAction("IniciarSesion", "Inicio");
-
-            return View();
+            if (respuesta.Codigo == 0)
+                return RedirectToAction("IniciarSesionUsuario", "Inicio");
+            else
+            {
+                ViewBag.MsjPantalla = respuesta.Detalle;
+                return View();
+            }
         }
 
         // -------------------------------------------------------------
         // PARA RECUPERARA ACCESO
 
         [HttpGet]
-        public ActionResult RecuperarAcceso() 
+        public ActionResult RecuperarAccesoUsuario()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult RecuperarAcceso(Usuario entidad)
+        public ActionResult RecuperarAccesoUsuario(Usuario entidad)
         {
             return View();
         }
-        
+
         // -------------------------------------------------------------
         // PARA PANTALLA PRINCIPAL
 
