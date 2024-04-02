@@ -19,5 +19,8 @@ namespace Api_Web.Models
         public string Nombre { get; set; }
         public string CorreoElectronico { get; set; }
         public bool Estado { get; set; }
+        public bool Temporal { get; set; }
+        public System.DateTime Vencimiento { get; set; }
+        public long ConsecutivoRol { get; set; }
     }
 }

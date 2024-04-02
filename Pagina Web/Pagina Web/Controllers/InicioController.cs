@@ -28,12 +28,27 @@ namespace Pagina_Web.Controllers
             var respuesta = modelo.IniciarSesionUsuario(entidad);
 
             if (respuesta.Codigo == 0)
+            {
+                Session["NombreUsuario"] = respuesta.Dato.Nombre;
+                Session["RolUsuario"] = respuesta.Dato.ConsecutivoRol;
                 return RedirectToAction("PantallaPrincipal", "Inicio");
+            }
             else
             {
                 ViewBag.MsjPantalla = respuesta.Detalle;
                 return View();
             }
+        }
+
+        // -------------------------------------------------------------
+        // PARA CERRAR SESIÓN
+
+        [FiltroSeguridad]
+        [HttpGet]
+        public ActionResult CerrarSesionUsuario()
+        {
+            Session.Clear();
+            return RedirectToAction("IniciarSesionUsuario","Inicio");
         }
 
         // -------------------------------------------------------------
@@ -70,12 +85,23 @@ namespace Pagina_Web.Controllers
         [HttpPost]
         public ActionResult RecuperarAccesoUsuario(Usuario entidad)
         {
-            return View();
+            var respuesta = modelo.RecuperarAccesoUsuario(entidad);
+
+            if (respuesta.Codigo == 0)
+            {
+                return RedirectToAction("IniciarSesionUsuario", "Inicio");
+            }
+            else
+            {
+                ViewBag.MsjPantalla = respuesta.Detalle;
+                return View();
+            }
         }
 
         // -------------------------------------------------------------
         // PARA PANTALLA PRINCIPAL
 
+        [FiltroSeguridad]
         [HttpGet]
         public ActionResult PantallaPrincipal()
         {

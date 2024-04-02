@@ -1,10 +1,9 @@
-﻿using Api_Web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Api_Web.Entidades
+namespace Pagina_Web.Entidades
 {
     public class Producto
     {
@@ -22,7 +21,7 @@ namespace Api_Web.Entidades
     {
         public int Codigo { get; set; }
         public string Detalle { get; set; }
-        public List<ConsultarProductos_Result> Datos { get; set; }
-        public ConsultarProductos_Result Dato { get; set; }
+        public List<Producto> Datos { get; set; }
+        public Producto Dato { get; set; }
     }
 }

@@ -3,10 +3,12 @@ using Api_Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Web.Http;
 
 namespace Api_Web.Controllers
@@ -25,7 +27,7 @@ namespace Api_Web.Controllers
             {
                 using (var db = new Pagina_Web___MartesEntities())
                 {
-                    int resp = db.RegistrarUsuario(entidad.Identificacion, entidad.Contrasenna, entidad.Nombre, entidad.Correo);
+                    int resp = db.RegistrarUsuario(entidad.Identificacion, entidad.Contrasenna, entidad.Nombre, entidad.CorreoElectronico);
 
                     if (resp > 0)
                     {
@@ -61,14 +63,22 @@ namespace Api_Web.Controllers
 
                     if (datos != null)
                     {
-                        respuesta.Codigo = 0;
-                        respuesta.Detalle = string.Empty;
-                        respuesta.Dato = datos;
+                        if(datos.Temporal && DateTime.Now > datos.Vencimiento)
+                        {
+                            respuesta.Codigo = -1;
+                            respuesta.Detalle = "Su contraseña temporal ha caducado";
+                        }
+                        else 
+                        {
+                            respuesta.Codigo = 0;
+                            respuesta.Detalle = string.Empty;
+                            respuesta.Dato = datos;
+                        }
                     }
                     else
                     {
                         respuesta.Codigo = -1;
-                        respuesta.Detalle = "No se pudo vaidar su informacion de ingreso";
+                        respuesta.Detalle = "No se pudo validar su informacion de ingreso";
                     }
                 }
             }
@@ -90,12 +100,21 @@ namespace Api_Web.Controllers
             {
                 using (var db = new Pagina_Web___MartesEntities())
                 {
-                    var datos = db.RecuperarAccesoUsuario(entidad.Identificacion, entidad.Correo).FirstOrDefault();
+                    var datos = db.RecuperarAccesoUsuario(entidad.Identificacion, entidad.CorreoElectronico).FirstOrDefault();
 
                     if (datos != null)
-                    {
+                    { 
+                        string rutaHTML = AppDomain.CurrentDomain.BaseDirectory + "Password.html";
+                        string contenidoHTML = File.ReadAllText(rutaHTML);
+
+                        contenidoHTML = contenidoHTML.Replace("@@Nombre", datos.Nombre);
+                        contenidoHTML = contenidoHTML.Replace("@@Contrasenna", datos.Contrasenna);
+                        contenidoHTML = contenidoHTML.Replace("@@Vencimiento", datos.Vencimiento.ToString("dd/MM/yyyy HH:mm:ss tt"));
+
+
+
                         //MANDAR EL CORREO
-                        model.EnviarCorreo(datos.CorreoElectronico, "Acceso Temporal", datos.Contrasenna);
+                        model.EnviarCorreo(datos.CorreoElectronico, "Acceso Temporal", contenidoHTML);
 
                         respuesta.Codigo = 0;
                         respuesta.Detalle = string.Empty;

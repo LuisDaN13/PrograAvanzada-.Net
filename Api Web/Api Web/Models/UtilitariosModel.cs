@@ -21,7 +21,7 @@ namespace Api_Web.Models
 
             SmtpClient client = new SmtpClient("smtp.office365.com", 587);
             client.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["cuentaCorreo"],
-                                                                  ConfigurationManager.AppSettings["clave"]);
+                                                                  ConfigurationManager.AppSettings["claveCorreo"]);
             client.EnableSsl = true;
 
             client.Send(message);

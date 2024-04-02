@@ -20,7 +20,7 @@ namespace Pagina_Web.Models
             // LLAMAR A LA API
             using (var client = new HttpClient())
             {
-                url = "Inicio/RegistrarUsuario";
+                url += "Inicio/RegistrarUsuario";
                 JsonContent jsonEntidad = JsonContent.Create(entidad);
                 var respuesta = client.PostAsync(url, jsonEntidad).Result;
 
@@ -45,6 +45,22 @@ namespace Pagina_Web.Models
                     return respuesta.Content.ReadFromJsonAsync<ConfirmacionUsuario>().Result;
                 }
                 return null;
+            }
+        }
+
+        public Confirmacion RecuperarAccesoUsuario(Usuario entidad)
+        {
+            // LLAMAR A LA API
+            using (var client = new HttpClient())
+            {
+                url += "Inicio/RecuperarAccesoUsuario";
+                JsonContent jsonEntidad = JsonContent.Create(entidad);
+                var respuesta = client.PostAsync(url, jsonEntidad).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                    return respuesta.Content.ReadFromJsonAsync<Confirmacion>().Result;
+                else
+                    return null;
             }
         }
     }
