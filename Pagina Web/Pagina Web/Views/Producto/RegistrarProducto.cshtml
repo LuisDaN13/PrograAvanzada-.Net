@@ -27,18 +27,23 @@
                         @using (Html.BeginForm("RegistrarProducto", "Producto", FormMethod.Post, new { @enctype = "multipart/form-data" })) //permite pasar una imagen
                         {
                             <div class="form-group">
+                                @Html.Label("Nombre")
                                 @Html.TextBoxFor(m => m.NombreProducto, new { @class = "form-control form-control-user", @placeholder = "Nombre", @required = "true" })
                             </div>
                             <div class="form-group">
+                                @Html.Label("Precio")
                                 @Html.TextBoxFor(m => m.Precio, new { @class = "form-control form-control-user", @placeholder = "Precio", @required = "true" })
                             </div>
                             <div class="form-group">
+                                @Html.Label("Inventario")
                                 @Html.TextBoxFor(m => m.Inventario, new { @class = "form-control form-control-user", @placeholder = "Inventario", @type = "Number", @required = "true" })
                             </div>
                             <div class="form-group">
+                                @Html.Label("Imagen")
                                 <input type="file" id="ImagenProducto" name="ImagenProducto" class="form-control form-control-user" required>
                             </div>
                             <div class="form-group">
+                                @Html.Label("Nombre Producto")
                                 @Html.DropDownListFor(m => m.IdCategoria, ViewBag.TiposCategoria as List<SelectListItem>, new { @class = "form-control form-control-user", @required = "true" })
                             </div>
                             <input type="submit" class="btn btn-primary btn-user btn-block" value="Procesar">

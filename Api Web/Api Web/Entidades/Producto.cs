@@ -22,7 +22,7 @@ namespace Api_Web.Entidades
     {
         public int Codigo { get; set; }
         public string Detalle { get; set; }
-        public List<ConsultarProductos_Result> Datos { get; set; }
-        public ConsultarProductos_Result Dato { get; set; }
+        public object Datos { get; set; }
+        public object Dato { get; set; }
     }
 }

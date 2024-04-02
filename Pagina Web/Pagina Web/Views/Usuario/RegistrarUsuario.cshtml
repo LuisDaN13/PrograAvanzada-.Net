@@ -1,0 +1,56 @@
+﻿@model Pagina_Web.Entidades.Usuario
+
+@{
+    ViewBag.Title = "RegistrarUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Productos</h6>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                        @if (ViewBag.MsjPantalla != null)
+                        {
+                            <div class="alert alert-warning" role="alert" style="text-align:center">
+                                @ViewBag.MsjPantalla
+                            </div>
+                        }
+
+                        @using (Html.BeginForm("RegistrarUsuario", "Usuario", FormMethod.Post, new { @enctype = "multipart/form-data" })) //permite pasar una imagen
+                        {
+                            <div class="form-group">
+                                @Html.Label("Identificación")
+                                @Html.TextBoxFor(m => m.Identificacion, new { @class = "form-control form-control-user", @placeholder = "Identificación", @onkeyup = "ConsultarNombre()", @required = "true" })
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Contraseña")
+                                @Html.TextBoxFor(m => m.Contrasenna, new { @class = "form-control form-control-user", @placeholder = "Contraseña", @type = "Password", @required = "true" })
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Nombre")
+                                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control form-control-user", @placeholder = "Nombre", @readOnly = "True", @required = "true" })
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Correo Eelctrónico")
+                                @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control form-control-user", @placeholder = "Correo Eelctrónico", @type = "Email", @required = "true" })
+                            </div>
+                            <div class="form-group">
+                                @Html.Label("Nombre Rol")
+                                @Html.DropDownListFor(m => m.ConsecutivoRol, ViewBag.TiposRoles as List<SelectListItem>, new { @class = "form-control form-control-user", @required = "true" })
+                            </div>
+                            <input type="submit" class="btn btn-primary btn-user btn-block" value="Procesar">
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Estilos/js/RegistroUsuarios.js"></script>

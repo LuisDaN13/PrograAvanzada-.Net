@@ -12,6 +12,7 @@ namespace Pagina_Web.Controllers
     {
 
         UsuarioModel modelo = new UsuarioModel();
+        ProductoModel modeloPro = new ProductoModel();
 
         // -------------------------------------------------------------
         // PARA INICIAR SESION
@@ -29,8 +30,10 @@ namespace Pagina_Web.Controllers
 
             if (respuesta.Codigo == 0)
             {
+                Session["Consecutivo"] = respuesta.Dato.Consecutivo;
                 Session["NombreUsuario"] = respuesta.Dato.Nombre;
                 Session["RolUsuario"] = respuesta.Dato.ConsecutivoRol;
+                Session["NombreRol"] = respuesta.Dato.NombreRol;
                 return RedirectToAction("PantallaPrincipal", "Inicio");
             }
             else
@@ -105,7 +108,17 @@ namespace Pagina_Web.Controllers
         [HttpGet]
         public ActionResult PantallaPrincipal()
         {
-            return View();
+            var respuesta = modeloPro.ConsultarProductos(false);
+
+            if (respuesta.Codigo == 0)
+            {
+                return View(respuesta.Datos);
+            }
+            else
+            {
+                ViewBag.MsjPantalla = respuesta.Detalle;
+                return View(new List<Producto>());
+            }
         }
     }
 }

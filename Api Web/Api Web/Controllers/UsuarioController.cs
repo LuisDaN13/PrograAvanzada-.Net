@@ -9,52 +9,21 @@ using System.Web.Http;
 
 namespace Api_Web.Controllers
 {
-    public class ProductoController : ApiController
+    public class UsuarioController : ApiController
     {
-        [Route("Producto/ConsultarProductos")]
+        // --------------------------------------------------------------------
+
+        [Route("Usuario/ConsultarUsuario")]
         [HttpGet]
-        public ConfirmacionProducto ConsultarProductos(bool MostrarTodos) //GET Y DELETE: solo recibe parametros | PUT Y POST: solo recibe objetos
+        public ConfirmacionUsuario ConsultarUsuario(long Consecutivo)
         {
-            var respuesta = new ConfirmacionProducto();
+            var respuesta = new ConfirmacionUsuario();
 
             try
             {
                 using (var db = new Pagina_Web___MartesEntities())
                 {
-                    var datos = db.ConsultarProductos(MostrarTodos).ToList(); //si solo espero uno sería "firstOrDefault"
-
-                    if (datos.Count > 0)
-                    {
-                        respuesta.Codigo = 0;
-                        respuesta.Detalle = string.Empty;
-                        respuesta.Datos = datos;
-                    }
-                    else
-                    {
-                        respuesta.Codigo = -1;
-                        respuesta.Detalle = "No se encontraron resultados";
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                respuesta.Codigo = -1;
-                respuesta.Detalle = "Se presentó un error en el sistema";
-            }
-            return respuesta;
-        }
-
-        [Route("Producto/ConsultarProducto")]
-        [HttpGet]
-        public ConfirmacionProducto ConsultarProducto(long Consecutivo)
-        {
-            var respuesta = new ConfirmacionProducto();
-
-            try
-            {
-                using (var db = new Pagina_Web___MartesEntities())
-                {
-                    var datos = db.ConsultarProducto(Consecutivo).FirstOrDefault();
+                    var datos = db.ConsultarUsuario(Consecutivo).FirstOrDefault();
 
                     if (datos != null)
                     {
@@ -77,17 +46,118 @@ namespace Api_Web.Controllers
             return respuesta;
         }
 
-        [Route("Producto/ConsultarTiposCategoria")]
-        [HttpGet]
-        public ConfirmacionTiposCategoria ConsultarTiposCategoria()
+        [Route("Usuario/ActualizarUsuario")]
+        [HttpPut]
+        public Confirmacion ActualizarUsuario(Usuario entidad)
         {
-            var respuesta = new ConfirmacionTiposCategoria();
+            var respuesta = new Confirmacion();
 
             try
             {
                 using (var db = new Pagina_Web___MartesEntities())
                 {
-                    var datos = db.ConsultarTiposCategoria().ToList();
+                    var resp = db.ActualizarUsuario(entidad.Consecutivo, entidad.Contrasenna, entidad.Nombre, entidad.CorreoElectronico);
+
+                    if (resp > 0)
+                    {
+                        respuesta.Codigo = 0;
+                        respuesta.Detalle = string.Empty;
+                    }
+                    else
+                    {
+                        respuesta.Codigo = -1;
+                        respuesta.Detalle = "La información ya se encuentra registrada en el sistema";
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                respuesta.Codigo = -1;
+                respuesta.Detalle = "Su información no se pudo registrar en este momento";
+            }
+            return respuesta;
+        }
+
+        // --------------------------------------------------------------------
+
+        [Route("Usuario/ConsultarUsuarioSC")]
+        [HttpGet]
+        public ConfirmacionUsuario ConsultarUsuarioSC(long Consecutivo)
+        {
+            var respuesta = new ConfirmacionUsuario();
+
+            try
+            {
+                using (var db = new Pagina_Web___MartesEntities())
+                {
+                    var datos = db.ConsultarUsuario(Consecutivo).FirstOrDefault();
+
+                    if (datos != null)
+                    {
+                        respuesta.Codigo = 0;
+                        respuesta.Detalle = string.Empty;
+                        respuesta.Dato = datos;
+                    }
+                    else
+                    {
+                        respuesta.Codigo = -1;
+                        respuesta.Detalle = "No se encontraron resultados";
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                respuesta.Codigo = -1;
+                respuesta.Detalle = "Se presentó un error en el sistema";
+            }
+            return respuesta;
+        }
+
+        [Route("Usuario/ActualizarUsuarioSC")]
+        [HttpPut]
+        public Confirmacion ActualizarUsuarioSC(Usuario entidad)
+        {
+            var respuesta = new Confirmacion();
+
+            try
+            {
+                using (var db = new Pagina_Web___MartesEntities())
+                {
+                    var resp = db.ActualizarUsuarioSC(entidad.Consecutivo, entidad.Identificacion, entidad.Nombre, entidad.CorreoElectronico, entidad.Estado, entidad.ConsecutivoRol);
+
+                    if (resp > 0)
+                    {
+                        respuesta.Codigo = 0;
+                        respuesta.Detalle = string.Empty;
+                    }
+                    else
+                    {
+                        respuesta.Codigo = -1;
+                        respuesta.Detalle = "Su información no se pudo actualizar";
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                respuesta.Codigo = -1;
+                respuesta.Detalle = "Su información no se pudo actualizar en este momento";
+            }
+            return respuesta;
+        }
+
+        // --------------------------------------------------------------------
+
+        [Route("Usuario/ConsultarUsuarios")]
+        [HttpGet]
+        public ConfirmacionUsuario ConsultarUsuarios()
+        {
+            var respuesta = new ConfirmacionUsuario();
+
+            try
+            {
+                using (var db = new Pagina_Web___MartesEntities())
+                {
+                    var datos = db.ConsultarUsuarios().ToList();
 
                     if (datos.Count > 0)
                     {
@@ -110,9 +180,11 @@ namespace Api_Web.Controllers
             return respuesta;
         }
 
-        [Route("Producto/RegistrarProducto")]
+        // --------------------------------------------------------------------
+
+        [Route("Usuario/RegistrarUsuario")]
         [HttpPost]
-        public Confirmacion RegistrarProducto(Producto entidad)
+        public Confirmacion RegistrarUsuario(Usuario entidad)
         {
             var respuesta = new Confirmacion();
 
@@ -120,40 +192,7 @@ namespace Api_Web.Controllers
             {
                 using (var db = new Pagina_Web___MartesEntities())
                 {
-                    var resp = db.RegistrarProducto(entidad.NombreProducto, entidad.Precio, entidad.Inventario, entidad.IdCategoria).FirstOrDefault();
-
-                    if (resp > 0)
-                    {
-                        respuesta.Codigo = 0;
-                        respuesta.Detalle = string.Empty;
-                        respuesta.ConsecutivoGenerado = resp.Value;
-                    }
-                    else
-                    {
-                        respuesta.Codigo = -1;
-                        respuesta.Detalle = "La información ya se encuentra registrada en el sistema";
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                respuesta.Codigo = -1;
-                respuesta.Detalle = "Su información no se pudo registrar en este momento";
-            }
-            return respuesta;
-        }
-
-        [Route("Producto/ActualizarProducto")]
-        [HttpPut]
-        public Confirmacion ActualizarProducto(Producto entidad)
-        {
-            var respuesta = new Confirmacion();
-
-            try
-            {
-                using (var db = new Pagina_Web___MartesEntities())
-                {
-                    var resp = db.ActualizarProducto(entidad.Consecutivo, entidad.NombreProducto, entidad.Precio, entidad.Inventario, entidad.IdCategoria);
+                    var resp = db.RegistrarUsuarioSCRUD(entidad.Identificacion, entidad.Contrasenna, entidad.Nombre, entidad.CorreoElectronico, entidad.ConsecutivoRol).FirstOrDefault();
 
                     if (resp > 0)
                     {
@@ -175,9 +214,11 @@ namespace Api_Web.Controllers
             return respuesta;
         }
 
-        [Route("Producto/EliminarProducto")]
+        // --------------------------------------------------------------------
+
+        [Route("Usuario/EliminarUsuario")]
         [HttpDelete]
-        public Confirmacion EliminarProducto(long Consecutivo)
+        public Confirmacion EliminarUsuario(long Consecutivo)
         {
             var respuesta = new Confirmacion();
 
@@ -185,7 +226,7 @@ namespace Api_Web.Controllers
             {
                 using (var db = new Pagina_Web___MartesEntities())
                 {
-                    var resp = db.EliminarProducto(Consecutivo);
+                    var resp = db.EliminarUsuario(Consecutivo);
 
                     if (resp > 0)
                     {
@@ -207,34 +248,37 @@ namespace Api_Web.Controllers
             return respuesta;
         }
 
-        [Route("Producto/ActualizarImagenProducto")]
-        [HttpPut]
-        public Confirmacion ActualizarImagenProducto(Producto entidad)
+        // --------------------------------------------------------------------
+
+        [Route("Usuario/ConsultarTiposRoles")]
+        [HttpGet]
+        public ConfirmacionTiposRoles ConsultarTiposRoles()
         {
-            var respuesta = new Confirmacion();
+            var respuesta = new ConfirmacionTiposRoles();
 
             try
             {
                 using (var db = new Pagina_Web___MartesEntities())
                 {
-                    var resp = db.ActualizarImagenProducto(entidad.Consecutivo, entidad.RutaImagen);
+                    var datos = db.ConsultarTiposRoles().ToList();
 
-                    if (resp > 0)
+                    if (datos.Count > 0)
                     {
                         respuesta.Codigo = 0;
                         respuesta.Detalle = string.Empty;
+                        respuesta.Datos = datos;
                     }
                     else
                     {
                         respuesta.Codigo = -1;
-                        respuesta.Detalle = "La información ya se encuentra registrada en el sistema";
+                        respuesta.Detalle = "No se encontraron resultados";
                     }
                 }
             }
             catch (Exception)
             {
                 respuesta.Codigo = -1;
-                respuesta.Detalle = "Su información no se pudo registrar en este momento";
+                respuesta.Detalle = "Se presentó un error en el sistema";
             }
             return respuesta;
         }

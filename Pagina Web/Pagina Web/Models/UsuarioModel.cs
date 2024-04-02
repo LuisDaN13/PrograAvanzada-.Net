@@ -13,14 +13,12 @@ namespace Pagina_Web.Models
 {
     public class UsuarioModel
     {
-        public string url = ConfigurationManager.AppSettings["urlWebApi"];
-
         public Confirmacion RegistrarUsuario(Usuario entidad)
         {
             // LLAMAR A LA API
             using (var client = new HttpClient())
             {
-                url += "Inicio/RegistrarUsuario";
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Inicio/RegistrarUsuario";
                 JsonContent jsonEntidad = JsonContent.Create(entidad);
                 var respuesta = client.PostAsync(url, jsonEntidad).Result;
 
@@ -36,7 +34,7 @@ namespace Pagina_Web.Models
             // LLAMAR A LA API
             using (var client = new HttpClient())
             {
-                url +=  "Inicio/IniciarSesionUsuario";
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Inicio/IniciarSesionUsuario";
                 JsonContent jsonEntidad = JsonContent.Create(entidad);
                 var respuesta = client.PostAsync(url, jsonEntidad).Result;
 
@@ -53,7 +51,8 @@ namespace Pagina_Web.Models
             // LLAMAR A LA API
             using (var client = new HttpClient())
             {
-                url += "Inicio/RecuperarAccesoUsuario";
+                
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Inicio/RecuperarAccesoUsuario";
                 JsonContent jsonEntidad = JsonContent.Create(entidad);
                 var respuesta = client.PostAsync(url, jsonEntidad).Result;
 
@@ -63,5 +62,123 @@ namespace Pagina_Web.Models
                     return null;
             }
         }
+
+        // -------------------------------------------------------------------------------
+
+        public ConfirmacionUsuario ConsultarUsuarios()
+        {
+            // LLAMAR A LA API
+            using (var client = new HttpClient())
+            {
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Usuario/ConsultarUsuarios";
+                var respuesta = client.GetAsync(url).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    return respuesta.Content.ReadFromJsonAsync<ConfirmacionUsuario>().Result;
+                }
+                return null;
+            }
+        }
+        public ConfirmacionUsuario ConsultarUsuario()
+        {
+            // LLAMAR A LA API
+            using (var client = new HttpClient())
+            {
+                long Consecutivo = long.Parse(HttpContext.Current.Session["Consecutivo"].ToString());
+                string url = ConfigurationManager.AppSettings["urlWebApi"] +"Usuario/ConsultarUsuario?Consecutivo=" + Consecutivo;
+                var respuesta = client.GetAsync(url).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    return respuesta.Content.ReadFromJsonAsync<ConfirmacionUsuario>().Result;
+                }
+                return null;
+            }
+        }
+        public ConfirmacionUsuario ConsultarTiposRoles()
+        {
+            // LLAMAR A LA API
+            using (var client = new HttpClient())
+            {
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Usuario/ConsultarTiposRoles";
+                var respuesta = client.GetAsync(url).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    return respuesta.Content.ReadFromJsonAsync<ConfirmacionUsuario>().Result;
+                }
+                return null;
+            }
+        }
+
+        // -------------------------------------------------------------------------------
+
+        public Confirmacion ActualizarUsuario(Usuario entidad)
+        {
+            // LLAMAR A LA API
+            using (var client = new HttpClient())
+            {
+                entidad.Consecutivo = long.Parse(HttpContext.Current.Session["Consecutivo"].ToString());
+
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Usuario/ActualizarUsuario";
+                JsonContent jsonEntidad = JsonContent.Create(entidad);
+                var respuesta = client.PutAsync(url, jsonEntidad).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                    return respuesta.Content.ReadFromJsonAsync<Confirmacion>().Result;
+                else
+                    return null;
+            }
+        }
+
+        // -------------------------------------------------------------------------------
+        public ConfirmacionUsuario ConsultarUsuarioSC(long Consecutivo)
+        {
+            // LLAMAR A LA API
+            using (var client = new HttpClient())
+            {
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Usuario/ConsultarUsuarioSC?Consecutivo=" + Consecutivo;
+                var respuesta = client.GetAsync(url).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    return respuesta.Content.ReadFromJsonAsync<ConfirmacionUsuario>().Result;
+                }
+                return null;
+            }
+        }
+        public Confirmacion ActualizarUsuarioSC(Usuario entidad)
+        {
+            // LLAMAR A LA API
+            using (var client = new HttpClient())
+            {
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Usuario/ActualizarUsuarioSC";
+                JsonContent jsonEntidad = JsonContent.Create(entidad);      
+                var respuesta = client.PutAsync(url, jsonEntidad).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                    return respuesta.Content.ReadFromJsonAsync<Confirmacion>().Result;
+                else
+                    return null;
+            }
+        }
+
+        // -------------------------------------------------------------------------------
+        public Confirmacion EliminarUsuario(long Consecutivo)
+        {
+            // LLAMAR A LA API
+            using (var client = new HttpClient())
+            {
+                string url = ConfigurationManager.AppSettings["urlWebApi"] + "Usuario/EliminarUsuario?Consecutivo=" + Consecutivo;
+                var respuesta = client.DeleteAsync(url).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                    return respuesta.Content.ReadFromJsonAsync<Confirmacion>().Result;
+                else
+                    return null;
+            }
+        }
     }
+
 }

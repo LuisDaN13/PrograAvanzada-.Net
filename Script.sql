@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Pagina Web _ Martes]    Script Date: 4/2/2024 12:11:10 AM ******/
+/****** Object:  Database [Pagina Web _ Martes]    Script Date: 4/2/2024 4:53:54 PM ******/
 CREATE DATABASE [Pagina Web _ Martes]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [Pagina Web _ Martes] SET QUERY_STORE (OPERATION_MODE = READ_WRIT
 GO
 USE [Pagina Web _ Martes]
 GO
-/****** Object:  Table [dbo].[tCategoria]    Script Date: 4/2/2024 12:11:10 AM ******/
+/****** Object:  Table [dbo].[tCategoria]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[tCategoria](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tProducto]    Script Date: 4/2/2024 12:11:10 AM ******/
+/****** Object:  Table [dbo].[tProducto]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -117,7 +117,7 @@ CREATE TABLE [dbo].[tProducto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tRol]    Script Date: 4/2/2024 12:11:10 AM ******/
+/****** Object:  Table [dbo].[tRol]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -131,7 +131,7 @@ CREATE TABLE [dbo].[tRol](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tUsuario]    Script Date: 4/2/2024 12:11:10 AM ******/
+/****** Object:  Table [dbo].[tUsuario]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,7 +164,9 @@ SET IDENTITY_INSERT [dbo].[tCategoria] OFF
 GO
 SET IDENTITY_INSERT [dbo].[tProducto] ON 
 GO
-INSERT [dbo].[tProducto] ([Consecutivo], [Nombre], [Precio], [Inventario], [Estado], [RutaImagen], [IdCategoria]) VALUES (6, N'Mouse RR', CAST(858.00 AS Decimal(10, 2)), 5, 1, N'/ImgProductos/6.jpg', 1)
+INSERT [dbo].[tProducto] ([Consecutivo], [Nombre], [Precio], [Inventario], [Estado], [RutaImagen], [IdCategoria]) VALUES (13, N'Teclado', CAST(5000.00 AS Decimal(10, 2)), 5, 0, N'/ImgProductos/13.jpg', 1)
+GO
+INSERT [dbo].[tProducto] ([Consecutivo], [Nombre], [Precio], [Inventario], [Estado], [RutaImagen], [IdCategoria]) VALUES (14, N'Mouse', CAST(858.00 AS Decimal(10, 2)), 2, 1, N'/ImgProductos/14.jpg', 1)
 GO
 SET IDENTITY_INSERT [dbo].[tProducto] OFF
 GO
@@ -180,6 +182,10 @@ SET IDENTITY_INSERT [dbo].[tUsuario] ON
 GO
 INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Contrasenna], [Nombre], [CorreoElectronico], [Estado], [Temporal], [Vencimiento], [ConsecutivoRol]) VALUES (1, N'119080132', N'123456', N'NUNEZ CHACON LUIS DANIEL', N'lnunez80132@ufide.ac.cr', 1, 0, CAST(N'2024-04-01T20:06:05.417' AS DateTime), 1)
 GO
+INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Contrasenna], [Nombre], [CorreoElectronico], [Estado], [Temporal], [Vencimiento], [ConsecutivoRol]) VALUES (3, N'204330955', N'123456', N'CHACON CHACON CELANIA MARIA', N'lnunez80132@ufide.ac.KR', 1, 0, CAST(N'2024-04-02T14:38:56.173' AS DateTime), 2)
+GO
+INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Contrasenna], [Nombre], [CorreoElectronico], [Estado], [Temporal], [Vencimiento], [ConsecutivoRol]) VALUES (4, N'119080125', N'123459', N'ARROYO ALVARADO HAMBLET', N'lnunez80132@ufide.ac.KR', 1, 0, CAST(N'2024-04-02T16:39:30.357' AS DateTime), 2)
+GO
 SET IDENTITY_INSERT [dbo].[tUsuario] OFF
 GO
 ALTER TABLE [dbo].[tUsuario]  WITH CHECK ADD  CONSTRAINT [FK_tUsuario_tRol] FOREIGN KEY([ConsecutivoRol])
@@ -187,7 +193,7 @@ REFERENCES [dbo].[tRol] ([ConsecutivoRol])
 GO
 ALTER TABLE [dbo].[tUsuario] CHECK CONSTRAINT [FK_tUsuario_tRol]
 GO
-/****** Object:  StoredProcedure [dbo].[ActualizarImagenProducto]    Script Date: 4/2/2024 12:11:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[ActualizarImagenProducto]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -202,7 +208,85 @@ BEGIN
 	WHERE Consecutivo = @Consecutivo
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultarProductos]    Script Date: 4/2/2024 12:11:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[ActualizarProducto]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ActualizarProducto]
+	@Consecutivo bigint,
+	@NombreProducto varchar(200),
+	@Precio decimal(10,2),
+	@Inventario int,
+	@IdCategoria int
+AS
+BEGIN
+	UPDATE  tProducto
+	SET		Nombre = @NombreProducto,
+			Precio = @Precio,
+			Inventario = @Inventario,
+			IdCategoria = @IdCategoria
+	WHERE	Consecutivo = @Consecutivo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ActualizarUsuario]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ActualizarUsuario]
+	@Consecutivo bigint,
+	@Contrasenna varchar(10),
+	@Nombre varchar(200),
+	@CorreoElectronico varchar(200)
+AS
+BEGIN
+	UPDATE  tUsuario
+	SET		Contrasenna = (CASE WHEN @Contrasenna IS NULL THEN Contrasenna ELSE @Contrasenna END),
+			Nombre = @Nombre,
+			CorreoElectronico = @CorreoElectronico
+	WHERE	Consecutivo = @Consecutivo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ActualizarUsuarioSC]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ActualizarUsuarioSC]
+	@Consecutivo bigint,
+	@Identificacion varchar(20),
+	@Nombre varchar(200),
+	@CorreoElectronico varchar(200),
+	@Estado bit,
+	@ConsecutivoRol bigint
+AS
+BEGIN
+	UPDATE  tUsuario
+	SET		Identificacion = @Identificacion,
+			Nombre = @Nombre,
+			CorreoElectronico = @CorreoElectronico,
+			Estado = @Estado,
+			ConsecutivoRol = @ConsecutivoRol
+	WHERE	Consecutivo = @Consecutivo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultarProducto]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConsultarProducto]
+	@Consecutivo BIGINT
+AS
+BEGIN
+	SELECT	Consecutivo, P.Nombre 'NombreProducto', Precio, Inventario, Estado, RutaImagen, P.IdCategoria, C.Nombre 'NombreCategoria'
+	FROM	tProducto P
+	INNER JOIN tCategoria C ON P.IdCategoria = C.IdCategoria
+	WHERE Consecutivo = @Consecutivo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultarProductos]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -228,7 +312,7 @@ BEGIN
 	END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultarTiposCategoria]    Script Date: 4/2/2024 12:11:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[ConsultarTiposCategoria]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -240,7 +324,76 @@ BEGIN
 	FROM	tCategoria 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[IniciarSesionUsuario]    Script Date: 4/2/2024 12:11:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[ConsultarTiposRoles]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConsultarTiposRoles]
+AS
+BEGIN
+	SELECT	ConsecutivoRol, NombreRol
+	FROM	tRol
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultarUsuario]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConsultarUsuario]
+	@Consecutivo BIGINT
+AS
+BEGIN
+	SELECT Consecutivo,Identificacion,Nombre,CorreoElectronico,Estado,Temporal,Vencimiento,U.ConsecutivoRol,R.NombreRol
+	FROM dbo.tUsuario U
+	INNER JOIN dbo.tRol R ON U.ConsecutivoRol = R.ConsecutivoRol
+	WHERE Consecutivo = @Consecutivo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultarUsuarios]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConsultarUsuarios]
+AS
+BEGIN
+	SELECT	Consecutivo, Identificacion, Contrasenna, Nombre, CorreoElectronico, Estado, R.NombreRol
+	FROM	tUsuario U
+	INNER JOIN	tROL R ON U.ConsecutivoRol = R.ConsecutivoRol
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[EliminarProducto]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[EliminarProducto]
+	@Consecutivo bigint
+AS
+BEGIN
+	UPDATE  tProducto
+	SET		Estado = 0
+	WHERE	Consecutivo = @Consecutivo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[EliminarUsuario]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[EliminarUsuario]
+	@Consecutivo bigint
+AS
+BEGIN
+	UPDATE  tUsuario
+	SET		Estado = 0
+	WHERE	Consecutivo = @Consecutivo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[IniciarSesionUsuario]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -253,14 +406,15 @@ BEGIN
 
 	DECLARE @ESTADO INT = 1
 
-	SELECT Consecutivo,Identificacion,Contrasenna,Nombre,CorreoElectronico,Estado,Temporal,Vencimiento,ConsecutivoRol
-	FROM dbo.tUsuario
+	SELECT Consecutivo,Identificacion,Nombre,CorreoElectronico,Estado,Temporal,Vencimiento,U.ConsecutivoRol,R.NombreRol
+	FROM dbo.tUsuario U
+	INNER JOIN dbo.tRol R ON U.ConsecutivoRol = R.ConsecutivoRol
 	WHERE Identificacion = @Identificacion 
 	and Contrasenna = @Contrasenna 
 	AND Estado = @Estado
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RecuperarAccesoUsuario]    Script Date: 4/2/2024 12:11:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[RecuperarAccesoUsuario]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -293,7 +447,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RegistrarProducto]    Script Date: 4/2/2024 12:11:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[RegistrarProducto]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -320,7 +474,7 @@ BEGIN
 	END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RegistrarUsuario]    Script Date: 4/2/2024 12:11:11 AM ******/
+/****** Object:  StoredProcedure [dbo].[RegistrarUsuario]    Script Date: 4/2/2024 4:53:54 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -338,6 +492,34 @@ BEGIN
 
 		Insert into dbo.tUsuario (Identificacion, Contrasenna, Nombre, CorreoElectronico, Estado, Temporal, Vencimiento,ConsecutivoRol)
 		Values (@Identificacion, @Contrasenna, @Nombre, @CorreoElectronico, @Estado, 0, GETDATE(),2)
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[RegistrarUsuarioSCRUD]    Script Date: 4/2/2024 4:53:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[RegistrarUsuarioSCRUD]
+	@Identificacion varchar(20),
+	@Contrasenna varchar(10),
+	@Nombre varchar(200),
+	@CorreoElectronico varchar(200),
+	@ConsecutivoRol bigint
+AS
+BEGIN
+	IF NOT EXISTS(SELECT 1 FROM dbo.tUsuario WHERE Identificacion = @Identificacion)
+	BEGIN
+		DECLARE @Estado INT = 1
+
+		Insert into dbo.tUsuario (Identificacion, Contrasenna, Nombre, CorreoElectronico, Estado, Temporal, Vencimiento,ConsecutivoRol)
+		Values (@Identificacion, @Contrasenna, @Nombre, @CorreoElectronico, @Estado, 0, GETDATE(), @ConsecutivoRol)
+
+		SELECT CONVERT(BIGINT,@@IDENTITY) Consecutivo
+	END
+	ELSE
+	BEGIN
+		SELECT CONVERT(BIGINT,-1) Consecutivo
 	END
 END
 GO

@@ -153,6 +153,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\InicioController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Entidades\Confirmacion.cs" />
     <Compile Include="Entidades\Producto.cs" />
     <Compile Include="Entidades\TiposCategoria.cs" />
@@ -339,6 +340,11 @@
     <Content Include="Views\Inicio\RecuperarAccesoUsuario.cshtml" />
     <Content Include="Views\Producto\ConsultaProductos.cshtml" />
     <Content Include="Views\Producto\RegistrarProducto.cshtml" />
+    <Content Include="Views\Producto\ActualizarProducto.cshtml" />
+    <Content Include="Views\Usuario\ActualizarUsuario.cshtml" />
+    <Content Include="Views\Usuario\ConsultaUsuarios.cshtml" />
+    <Content Include="Views\Usuario\RegistrarUsuario.cshtml" />
+    <Content Include="Views\Usuario\ActualizarUsuarioSC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
