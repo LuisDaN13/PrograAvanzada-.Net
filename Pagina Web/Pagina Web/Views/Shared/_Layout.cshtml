@@ -28,7 +28,7 @@
 
             <hr class="sidebar-divider">
 
-            @if (Session["RolUsuario"] != null && Session["RolUsuario"] == "1")
+            @if (Session["RolUsuario"] != null && Session["RolUsuario"].ToString() == "1")
             {
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -90,6 +90,7 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                     @if (Session["NombreUsuario"] != null)
                                     {
+                                        @Session["RolUsuario"].ToString()
                                         @Session["NombreUsuario"].ToString()
                                     }
                                 </span>

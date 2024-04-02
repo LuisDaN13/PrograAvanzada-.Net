@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Pagina Web _ Martes]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  Database [Pagina Web _ Martes]    Script Date: 4/2/2024 12:11:10 AM ******/
 CREATE DATABASE [Pagina Web _ Martes]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [Pagina Web _ Martes] SET QUERY_STORE (OPERATION_MODE = READ_WRIT
 GO
 USE [Pagina Web _ Martes]
 GO
-/****** Object:  Table [dbo].[tCategoria]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  Table [dbo].[tCategoria]    Script Date: 4/2/2024 12:11:10 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -98,7 +98,7 @@ CREATE TABLE [dbo].[tCategoria](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tProducto]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  Table [dbo].[tProducto]    Script Date: 4/2/2024 12:11:10 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -117,7 +117,7 @@ CREATE TABLE [dbo].[tProducto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tRol]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  Table [dbo].[tRol]    Script Date: 4/2/2024 12:11:10 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -131,7 +131,7 @@ CREATE TABLE [dbo].[tRol](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[tUsuario]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  Table [dbo].[tUsuario]    Script Date: 4/2/2024 12:11:10 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,11 +164,7 @@ SET IDENTITY_INSERT [dbo].[tCategoria] OFF
 GO
 SET IDENTITY_INSERT [dbo].[tProducto] ON 
 GO
-INSERT [dbo].[tProducto] ([Consecutivo], [Nombre], [Precio], [Inventario], [Estado], [RutaImagen], [IdCategoria]) VALUES (1, N'Mouse', CAST(5000.00 AS Decimal(10, 2)), 5, 1, N'PRUEBA', 1)
-GO
-INSERT [dbo].[tProducto] ([Consecutivo], [Nombre], [Precio], [Inventario], [Estado], [RutaImagen], [IdCategoria]) VALUES (2, N'Intel', CAST(30000.00 AS Decimal(10, 2)), 3, 1, N'PRUEBA', 2)
-GO
-INSERT [dbo].[tProducto] ([Consecutivo], [Nombre], [Precio], [Inventario], [Estado], [RutaImagen], [IdCategoria]) VALUES (3, N'SSD', CAST(15000.00 AS Decimal(10, 2)), 0, 1, N'PRUEBA', 3)
+INSERT [dbo].[tProducto] ([Consecutivo], [Nombre], [Precio], [Inventario], [Estado], [RutaImagen], [IdCategoria]) VALUES (6, N'Mouse RR', CAST(858.00 AS Decimal(10, 2)), 5, 1, N'/ImgProductos/6.jpg', 1)
 GO
 SET IDENTITY_INSERT [dbo].[tProducto] OFF
 GO
@@ -182,7 +178,7 @@ SET IDENTITY_INSERT [dbo].[tRol] OFF
 GO
 SET IDENTITY_INSERT [dbo].[tUsuario] ON 
 GO
-INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Contrasenna], [Nombre], [CorreoElectronico], [Estado], [Temporal], [Vencimiento], [ConsecutivoRol]) VALUES (1, N'119080132', N'123456', N'NUNEZ CHACON LUIS DANIEL', N'lnunez80132@ufide.ac.cr', 1, 0, CAST(N'2024-04-01T20:06:05.417' AS DateTime), 2)
+INSERT [dbo].[tUsuario] ([Consecutivo], [Identificacion], [Contrasenna], [Nombre], [CorreoElectronico], [Estado], [Temporal], [Vencimiento], [ConsecutivoRol]) VALUES (1, N'119080132', N'123456', N'NUNEZ CHACON LUIS DANIEL', N'lnunez80132@ufide.ac.cr', 1, 0, CAST(N'2024-04-01T20:06:05.417' AS DateTime), 1)
 GO
 SET IDENTITY_INSERT [dbo].[tUsuario] OFF
 GO
@@ -191,7 +187,22 @@ REFERENCES [dbo].[tRol] ([ConsecutivoRol])
 GO
 ALTER TABLE [dbo].[tUsuario] CHECK CONSTRAINT [FK_tUsuario_tRol]
 GO
-/****** Object:  StoredProcedure [dbo].[ConsultarProductos]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  StoredProcedure [dbo].[ActualizarImagenProducto]    Script Date: 4/2/2024 12:11:11 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ActualizarImagenProducto]
+	@Consecutivo BIGINT,
+	@RutaImagen VARCHAR(200)
+AS
+BEGIN
+	UPDATE [dbo].[tProducto]
+	SET RutaImagen = @RutaImagen
+	WHERE Consecutivo = @Consecutivo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ConsultarProductos]    Script Date: 4/2/2024 12:11:11 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -217,7 +228,19 @@ BEGIN
 	END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[IniciarSesionUsuario]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  StoredProcedure [dbo].[ConsultarTiposCategoria]    Script Date: 4/2/2024 12:11:11 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ConsultarTiposCategoria]
+AS
+BEGIN
+	SELECT	IdCategoria, Nombre 'NombreCategoria'
+	FROM	tCategoria 
+END
+GO
+/****** Object:  StoredProcedure [dbo].[IniciarSesionUsuario]    Script Date: 4/2/2024 12:11:11 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -237,7 +260,7 @@ BEGIN
 	AND Estado = @Estado
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RecuperarAccesoUsuario]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  StoredProcedure [dbo].[RecuperarAccesoUsuario]    Script Date: 4/2/2024 12:11:11 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -270,7 +293,34 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[RegistrarUsuario]    Script Date: 4/1/2024 8:31:54 PM ******/
+/****** Object:  StoredProcedure [dbo].[RegistrarProducto]    Script Date: 4/2/2024 12:11:11 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[RegistrarProducto]
+	@NombreProducto varchar(200),
+	@Precio decimal(10,2),
+	@Inventario int,
+	@IdCategoria int
+AS
+BEGIN
+	IF NOT EXISTS(SELECT 1 FROM dbo.tUsuario WHERE Nombre = @NombreProducto)
+	BEGIN
+		DECLARE @Estado INT = 1
+
+		Insert into [dbo].[tProducto] (Nombre, Precio, Inventario, Estado, RutaImagen, IdCategoria)
+		Values (@NombreProducto, @Precio, @Inventario, @Estado, '', @IdCategoria)
+
+		SELECT CONVERT(BIGINT,@@IDENTITY) Consecutivo
+	END
+	ELSE
+	BEGIN
+		SELECT CONVERT(BIGINT,-1) Consecutivo
+	END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[RegistrarUsuario]    Script Date: 4/2/2024 12:11:11 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

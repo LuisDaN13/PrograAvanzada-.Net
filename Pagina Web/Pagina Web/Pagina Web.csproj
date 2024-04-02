@@ -155,6 +155,7 @@
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Entidades\Confirmacion.cs" />
     <Compile Include="Entidades\Producto.cs" />
+    <Compile Include="Entidades\TiposCategoria.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -337,9 +338,11 @@
     <Content Include="Views\Inicio\PantallaPrincipal.cshtml" />
     <Content Include="Views\Inicio\RecuperarAccesoUsuario.cshtml" />
     <Content Include="Views\Producto\ConsultaProductos.cshtml" />
+    <Content Include="Views\Producto\RegistrarProducto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ImgProductos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

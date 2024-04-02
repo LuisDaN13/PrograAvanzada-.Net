@@ -11,7 +11,7 @@ namespace Pagina_Web.Models
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.HttpContext.Session["RolUsuario"] != "1")
+            if (filterContext.HttpContext.Session["RolUsuario"].ToString() != "1")
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary
                 {

@@ -27,7 +27,7 @@ namespace Api_Web.Controllers
             {
                 using (var db = new Pagina_Web___MartesEntities())
                 {
-                    int resp = db.RegistrarUsuario(entidad.Identificacion, entidad.Contrasenna, entidad.Nombre, entidad.CorreoElectronico);
+                    var resp = db.RegistrarUsuario(entidad.Identificacion, entidad.Contrasenna, entidad.Nombre, entidad.CorreoElectronico);
 
                     if (resp > 0)
                     {
